@@ -1,0 +1,26 @@
+{
+  "name": "Widgeditable",
+  "version": "0.0.0",
+  "description": "",
+  "main": "Gruntfile.js",
+  "directories": {
+    "example": "examples"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-concat": "~0.2.0",
+    "grunt-contrib-coffee": "~0.7.0",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-contrib-clean": "~0.4.1",
+    "matchdep": "~0.1.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "JavaScript",
+    "Editor"
+  ],
+  "author": "Christian Schmitz <chris@butfriendly.com>",
+  "license": "BSD-2-Clause"
+}

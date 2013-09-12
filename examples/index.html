@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Widgeditable</title>
+	<style>
+		body { font-family: Verdana; font-size: 12px; }
+		#wrap { width: 600px; }
+		p { line-height: 1.3rem; }
+
+
+		.widgeditable { outline: 1px solid green; padding: 3px; margin: 5px; }
+		[contenteditable="true"] { outline: 1px dashed #CCC; }
+		[contenteditable="true"]:hover { outline: 1px dashed #0090D2; }
+		
+
+		.image-upload-widgeditable .upload-dropzone { 
+			width: 100px; 
+			height: 100px; 
+			background-color: grey;
+		}
+
+
+		[draggable] {
+			-moz-user-select: none;
+			-khtml-user-select: none;
+			-webkit-user-select: none;
+			user-select: none;
+			/* Required to make elements draggable in old WebKit */
+			-khtml-user-drag: element;
+			-webkit-user-drag: element;
+		}
+
+		.product-photos img {
+			float:left;
+			margin: 10px;
+		}
+		.group:after {
+			content: "";
+			display: table;
+			clear: both;
+		}
+	</style>
+</head>
+<body>
+	<h1>Widgeditable Demo</h1>
+
+	<button id="save">Save</button>
+	<button id="edit">Edit</button>
+
+	<div id="wrap" class="widgeditable">
+		<h2 class="widgeditable" id="product-title">My product</h2>
+
+		<h3>Images</h3>
+		<div class="product-photos group">
+			<img src="" width="250" height="250" class="widgeditable" id="product-image" />
+			<img src="" width="250" height="250" class="widgeditable" id="product-image" />
+		</div>
+
+		<h3>Product teaser text</h3>
+		<div class="widgeditable" id="product-teaser">
+			<p>In culinary terms, a vegetable is an edible plant or its part, intended for cooking or eating raw. In biological terms, "vegetable" designates members of the plant kingdom.</p>
+			<p>The non-biological definition of a vegetable is largely based on culinary and cultural tradition. Apart from vegetables, other main types of plant food are fruits, grains and nuts. Vegetables are most often consumed as salads or cooked in savory or salty dishes, while culinary fruits are usually sweet and used for desserts, but it is not the universal rule.</p>
+		</div>
+
+		<h3>Nested elements</h3>
+		<div id="foo" style="background-color:rgba(200,200,200,0.5)">
+			<p>FOO</p>
+			<div id="bar" style="background-color:rgba(200,200,200,0.5)">
+				<p>BAR</p>
+				<div id="baz" class="widgeditable" style="background-color:rgba(200,200,200,0.5)">
+					<p>Editable BAZ</p>
+				</div>
+			</div>
+		</div>
+
+		<h3>List items</h3>
+		<ul class="widgeditable" id="product-facts">
+			<li id="fact-one">One</li>
+			<li id="fact-two">Two</li>
+		</ul>
+	</div>
+
+	<script type="text/javascript" src="../lib/underscore-min.js"></script>
+	<script type="text/javascript" src="../lib/jquery.js"></script>
+	<script type="text/javascript" src="../lib/signals.js"></script>
+	<script type="text/javascript" src="../dist/editor.js"></script>
+</body>
+</html>
