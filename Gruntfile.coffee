@@ -8,14 +8,24 @@ module.exports = (grunt) ->
 
 		# Install dependencies
 		bower:
-			install: {}
+			install:
+				options:
+#					targetDir: './components'
+					layout: 'byComponent'
+					cleanTargetDir: true
+					cleanBowerDir: false
+					install: true
+					verbose: true
 
 		# CoffeeScript complication
 		coffee:
-			core:
+			build:
+				options:
+					bare: true
+					sourceMap: true
 				expand: true
-				src: ['*.coffee']
-				dest: 'dist'
+				src: [ '*.coffee', '*.*.coffee' ]
+				dest: 'build'
 				cwd: 'src'
 				ext: '.js'
 			gruntfile:
@@ -24,18 +34,50 @@ module.exports = (grunt) ->
 		# Remove tmp directory once builds are complete
 		clean: ['build', 'dist']
 
+		uglify:
+			dist:
+				files:
+					'dist/widgeditable.min.js': ['build/widgeditable.concat.js']
+
+		jsonlint: {
+			json: {
+				src: [ '*.json' ]
+			}
+		}
+
 		watch:
+			json:
+				files: [ '<%= jsonlint.json.src %>' ]
+				tasks: ['jsonlint']
 			coffee:
 				files: [ '**/*.coffee' ]
 				tasks: ['build']
 			options:
 				spawn: false
+				livereload: true
+
+		connect:
+			options:
+				port: 9012
+				hostname: "0.0.0.0"
+				base: './'
+			dev:
+				options:
+					middleware: (connect, options) ->
+						[
+							do require('connect-livereload'),
+
+							# Serve statics
+							connect.static(options.base),
+
+							# Directory listing
+							connect.directory(options.base)
+						]
 
 	# Local tasks
-	@registerTask 'build', ['clean', 'coffee']
+	@registerTask 'build', ['jsonlint', 'clean', 'coffee']
 	@registerTask 'dist', ['build', 'uglify']
-#  @registerTask 'test', ['coffeelint', 'build', 'qunit']
-#  @registerTask 'crossbrowser', ['test', 'connect', 'saucelabs-qunit']
+	@registerTask 'dev', ['build', 'connect', 'watch']
 
-	@registerTask 'default', ['build']
+	@registerTask 'default', ['dist']
  

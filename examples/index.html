@@ -2,17 +2,23 @@
 <html>
 <head>
 	<meta charset="utf-8" />
-	<title>Widgeditable</title>
+	<title>ButFriendly's Widgeditable</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link href="../lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
+	<link href="../lib/bootstrap/css/bootstrap-theme.css" rel="stylesheet" />
 	<style>
+		.container { width: 700px; }
 		body { font-family: Verdana; font-size: 12px; }
-		#wrap { width: 600px; }
-		p { line-height: 1.3rem; }
 
+		p { line-height: 1.5rem; }
 
-		.widgeditable { outline: 1px solid green; padding: 3px; margin: 5px; }
-		[contenteditable="true"] { outline: 1px dashed #CCC; }
-		[contenteditable="true"]:hover { outline: 1px dashed #0090D2; }
-		
+		/*.widgeditable { outline: 1px solid green; padding: 3px; margin: 5px; }*/
+		[contenteditable="true"] { outline: 1px dashed #0090D2; }
+		[contenteditable="true"]:hover { background-color: #99CCFF; }
+		[contenteditable="true"]:focus { background-color: #99CCFF; }
+
+		.widgeditable-list li { position: relative; margin-bottom:10px;}
+		.widgeditable-list .widgeditable-controls { position: absolute; top: -2px;  left: -30px; }
 
 		.image-upload-widgeditable .upload-dropzone { 
 			width: 100px; 
@@ -32,7 +38,6 @@
 		}
 
 		.product-photos img {
-			float:left;
 			margin: 10px;
 		}
 		.group:after {
@@ -43,47 +48,85 @@
 	</style>
 </head>
 <body>
-	<h1>Widgeditable Demo</h1>
+	<header class="navbar navbar-inverse navbar-static-top" role="banner">
+		<div class="container">
+			<div class="navbar-header">
+				<a href="" class="navbar-brand">Widgeditable</a>
+			</div>
+			<nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+				<ul class="nav navbar-nav">
+					<li>
+						<a href="http://github.com/butfriendly/friendly-widgeditable">Source Code</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</header>
 
-	<button id="save">Save</button>
-	<button id="edit">Edit</button>
+	<div class="container">
+		<!--
+		<h1>Widgeditable Demo</h1>
+		-->
 
-	<div id="wrap" class="widgeditable">
-		<h2 class="widgeditable" id="product-title">My product</h2>
-
-		<h3>Images</h3>
-		<div class="product-photos group">
-			<img src="" width="250" height="250" class="widgeditable" id="product-image" />
-			<img src="" width="250" height="250" class="widgeditable" id="product-image" />
+		<div class="btn-group">
+			<button id="activate" class="btn btn-default">Activate</button>
+			<button id="save" class="btn btn-default">Save</button>
+			<button id="deactivate" class="btn btn-default">Deactivate</button>
 		</div>
 
-		<h3>Product teaser text</h3>
-		<div class="widgeditable" id="product-teaser">
-			<p>In culinary terms, a vegetable is an edible plant or its part, intended for cooking or eating raw. In biological terms, "vegetable" designates members of the plant kingdom.</p>
-			<p>The non-biological definition of a vegetable is largely based on culinary and cultural tradition. Apart from vegetables, other main types of plant food are fruits, grains and nuts. Vegetables are most often consumed as salads or cooked in savory or salty dishes, while culinary fruits are usually sweet and used for desserts, but it is not the universal rule.</p>
-		</div>
+		<div id="wrap" class="widgeditable" data-store="http://127.0.0.1">
+			<h2 class="widgeditable" id="product-title">My product</h2>
 
-		<h3>Nested elements</h3>
-		<div id="foo" style="background-color:rgba(200,200,200,0.5)">
-			<p>FOO</p>
-			<div id="bar" style="background-color:rgba(200,200,200,0.5)">
-				<p>BAR</p>
-				<div id="baz" class="widgeditable" style="background-color:rgba(200,200,200,0.5)">
-					<p>Editable BAZ</p>
+			<div class="panel panel-default">
+				<div class="widgeditable panel-body" id="product-teaser">
+					<p>In culinary terms, a vegetable is an edible plant or its part, intended for cooking or eating raw. In biological terms, "vegetable" designates members of the plant kingdom. In culinary terms, a vegetable is an edible plant or its part, intended for cooking or eating raw. In biological terms, "vegetable" designates members of the plant kingdom.</p>
 				</div>
 			</div>
-		</div>
 
-		<h3>List items</h3>
-		<ul class="widgeditable" id="product-facts">
-			<li id="fact-one">One</li>
-			<li id="fact-two">Two</li>
-		</ul>
+			<div class="row product-photos">
+				<div class="col-xs-6">
+					<img src="" width="250" height="200" class="widgeditable" id="product-image1" />
+				</div>
+				<div class="col-xs-6">
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<p>There is another list below which gets stores separately.</p>
+							<ul class="widgeditable" data-store="http://127.0.0.1/list" id="more-product-facts">
+								<li><p>One</p></li>
+								<li>Two</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-xs-6">
+					<div class="panel panel-default">
+						<div class="widgeditable panel-body" id="product-left">
+							<p>Vegetables are most often consumed as salads or cooked in savory or salty dishes, while culinary fruits are usually sweet and used for desserts, but it is not the universal rule.</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-6">
+					<img src="" width="250" height="200" class="widgeditable" id="product-image2" />
+					<h3>List items</h3>
+					<ul class="widgeditable" id="product-facts">
+						<li id="fact-one">One</li>
+						<li id="fact-two">Two</li>
+					</ul>
+					<p>Vegetables are <span class="widgeditable" id="inline-text">most often consumed as salads or cooked in savory or salty dishes</span>, while culinary fruits are usually sweet and used for desserts, but it is not the universal rule.</p>
+				</div>
+			</div>
+
+		</div>
 	</div>
 
-	<script type="text/javascript" src="../lib/underscore-min.js"></script>
-	<script type="text/javascript" src="../lib/jquery.js"></script>
-	<script type="text/javascript" src="../lib/signals.js"></script>
-	<script type="text/javascript" src="../dist/editor.js"></script>
+	<script type="text/javascript" src="../lib/jquery/jquery.js"></script>
+	<script type="text/javascript" src="../lib/bootstrap/js/bootstrap.js"></script>
+	<script type="text/javascript" src="../lib/underscore/js/underscore-min.js"></script>
+	<script type="text/javascript" src="../lib/js-signals/signals.js"></script>
+	<script type="text/javascript" src="../build/widgeditable.js"></script>
+	<script type="text/javascript" src="../build/examples.js"></script>
 </body>
 </html>
